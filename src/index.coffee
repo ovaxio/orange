@@ -18,15 +18,19 @@ class Orange
     @container.style.left = pos + "%"
 
   next : ()->
+    @stop()
     @current++
     @current = @current % @count
     @goTo(@current)
-    @stop()
+    return
 
   prev : ()->
+    @stop()
+    @current--
     if @current <= 0
-      return
-    @goTo(@current--)
+      @current = 0
+    @goTo(@current)
+    return 
 
   start : (t)->
     @timer = setInterval ()=>

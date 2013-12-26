@@ -30,17 +30,19 @@
     };
 
     Orange.prototype.next = function() {
+      this.stop();
       this.current++;
       this.current = this.current % this.count;
       this.goTo(this.current);
-      return this.stop();
     };
 
     Orange.prototype.prev = function() {
+      this.stop();
+      this.current--;
       if (this.current <= 0) {
-        return;
+        this.current = 0;
       }
-      return this.goTo(this.current--);
+      this.goTo(this.current);
     };
 
     Orange.prototype.start = function(t) {
