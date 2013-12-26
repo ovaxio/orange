@@ -2,19 +2,20 @@ class Orange
   constructor : (el)->
     @el = el
     @current = 0
-    @count = @el.getElementsByClassName('slide').length
-    console.log @count
     @timer = null
-    @el.getElementsByClassName('slider-container')[0].style.width = (@count * 100) + "%"
-    for s in @el.getElementsByClassName('slide')
+    @container = @el.getElementsByClassName('orange-skin')[0]
+    @slices = @el.getElementsByClassName('slice')
+    @count = @slices.length
+    @container.style.width = (@count * 100) + "%"
+    for s in @slices
       s.style.width = (100 / @count) + "%"
 
   getSlide : (id)->
-    return @el.getElementsByClassName('slide')[@current]
+    return @slices[@current]
 
   goTo : (id)->
     pos = id * -100
-    @el.getElementsByClassName('slider-container')[0].style.left = pos + "%"
+    @container.style.left = pos + "%"
 
   next : ()->
     @current++

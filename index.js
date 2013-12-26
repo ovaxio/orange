@@ -7,11 +7,12 @@
       var s, _i, _len, _ref;
       this.el = el;
       this.current = 0;
-      this.count = this.el.getElementsByClassName('slide').length;
-      console.log(this.count);
       this.timer = null;
-      this.el.getElementsByClassName('slider-container')[0].style.width = (this.count * 100) + "%";
-      _ref = this.el.getElementsByClassName('slide');
+      this.container = this.el.getElementsByClassName('orange-skin')[0];
+      this.slices = this.el.getElementsByClassName('slice');
+      this.count = this.slices.length;
+      this.container.style.width = (this.count * 100) + "%";
+      _ref = this.slices;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         s = _ref[_i];
         s.style.width = (100 / this.count) + "%";
@@ -19,13 +20,13 @@
     }
 
     Orange.prototype.getSlide = function(id) {
-      return this.el.getElementsByClassName('slide')[this.current];
+      return this.slices[this.current];
     };
 
     Orange.prototype.goTo = function(id) {
       var pos;
       pos = id * -100;
-      return this.el.getElementsByClassName('slider-container')[0].style.left = pos + "%";
+      return this.container.style.left = pos + "%";
     };
 
     Orange.prototype.next = function() {
