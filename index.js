@@ -8,8 +8,8 @@
       this.el = el;
       this.current = 0;
       this.timer = null;
-      this.container = this.el.getElementsByClassName('orange-skin')[0];
-      this.slices = this.el.getElementsByClassName('slice');
+      this.container = this.el.querySelectorAll('.orange-skin')[0];
+      this.slices = this.el.querySelectorAll('slice');
       this.count = this.slices.length;
       this.container.style.width = (this.count * 100) + "%";
       _ref = this.slices;

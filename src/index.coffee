@@ -3,8 +3,8 @@ class Orange
     @el = el
     @current = 0
     @timer = null
-    @container = @el.getElementsByClassName('orange-skin')[0]
-    @slices = @el.getElementsByClassName('slice')
+    @container = @el.querySelectorAll('.orange-skin')[0]
+    @slices = @el.querySelectorAll('slice')
     @count = @slices.length
     @container.style.width = (@count * 100) + "%"
     for s in @slices
