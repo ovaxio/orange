@@ -1,4 +1,4 @@
-class SlideLoop
+class Orange
   constructor : (el)->
     @el = el
     @current = 0
@@ -38,7 +38,7 @@ class SlideLoop
     if @timer
       clearInterval @timer
 
-module.exports = SlideLoop
+module.exports = Orange
 
 
 
