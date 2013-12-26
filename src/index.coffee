@@ -4,7 +4,7 @@ class Orange
     @current = 0
     @timer = null
     @container = @el.querySelectorAll('.orange-skin')[0]
-    @slices = @el.querySelectorAll('slice')
+    @slices = @el.querySelectorAll('.slice')
     @count = @slices.length
     @container.style.width = (@count * 100) + "%"
     for s in @slices
