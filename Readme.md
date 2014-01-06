@@ -28,21 +28,34 @@
 ## Usage
 
 ```html
+<div class="orange">
+  <div class="nav-next"></div>
+  <div class="nav-prev"></div>
+  <div class="orange-skin">
+    <div class="slice"> 1 </div>
+    <div class="slice"> 2 </div>
+    <div class="slice"> 3 </div>
+  </div>
+</div>
 
-orange = require('orange')
 
-o = new Orange(document.querySelectorAll('.orange')[0])
-o.start(4000) // 4s time out for each slide
-
-document.querySelectorAll('.orange .nav-next')[0].onclick = function () {
-  o.next();
-  o.stop() // Stop auto sliding
-}
-
-document.querySelectorAll('.orange .nav-prev')[0].onclick = function () {
-  o.prev();
-  o.stop() // Stop auto sliding
-}
+<script type="text/javascript">
+  orange = require('orange')
+  
+  o = new Orange(document.querySelectorAll('.orange')[0])
+  o.start(4000) // 4s time out for each slide
+  
+  
+  // initialize events onclick next and prev
+  document.querySelectorAll('.orange .nav-next')[0].onclick = function () {
+    o.next();
+    o.stop() // Stop auto sliding
+  }
+  document.querySelectorAll('.orange .nav-prev')[0].onclick = function () {
+    o.prev();
+    o.stop() // Stop auto sliding
+  }
+</script>
 
 ```
   
