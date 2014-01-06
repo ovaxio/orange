@@ -25,6 +25,10 @@
 
     Orange.prototype.goTo = function(id) {
       var pos;
+      if (id < 0 || id >= this.count) {
+        return;
+      }
+      this.current = id;
       pos = id * -100;
       return this.container.style.left = pos + "%";
     };

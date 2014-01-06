@@ -14,6 +14,9 @@ class Orange
     return @slices[@current]
 
   goTo : (id)->
+    if id < 0 || id >= @count
+      return
+    @current = id
     pos = id * -100
     @container.style.left = pos + "%"
 
