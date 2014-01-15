@@ -39,16 +39,15 @@
         return;
       }
       this.current++;
-      this.current = this.current % this.count;
       this.goTo(this.current);
     };
 
     Orange.prototype.prev = function() {
       this.stop();
-      this.current--;
-      if (this.current <= 0) {
-        this.current = 0;
+      if (this.current - 1 < 0) {
+        return;
       }
+      this.current--;
       this.goTo(this.current);
     };
 
