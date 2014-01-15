@@ -35,6 +35,9 @@
 
     Orange.prototype.next = function() {
       this.stop();
+      if (this.current + 1 >= this.count) {
+        return;
+      }
       this.current++;
       this.current = this.current % this.count;
       this.goTo(this.current);
@@ -46,6 +49,22 @@
       if (this.current <= 0) {
         this.current = 0;
       }
+      this.goTo(this.current);
+    };
+
+    Orange.prototype.prevLoop = function() {
+      this.stop();
+      this.current--;
+      if (this.current < 0) {
+        this.current = this.count - 1;
+      }
+      this.goTo(this.current);
+    };
+
+    Orange.prototype.nextLoop = function() {
+      this.stop();
+      this.current++;
+      this.current = this.current % this.count;
       this.goTo(this.current);
     };
 

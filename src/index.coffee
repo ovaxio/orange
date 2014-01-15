@@ -22,6 +22,7 @@ class Orange
 
   next : ()->
     @stop()
+    return if @current + 1 >= @count
     @current++
     @current = @current % @count
     @goTo(@current)
@@ -33,7 +34,23 @@ class Orange
     if @current <= 0
       @current = 0
     @goTo(@current)
-    return 
+    return
+
+  prevLoop : ()->
+    @stop()
+    @current--
+    if @current < 0
+      @current = @count - 1
+    @goTo(@current)
+    return
+
+  nextLoop : ()->
+    @stop()
+    @current++
+    @current = @current % @count
+    @goTo(@current)
+    return
+
 
   start : (t)->
     @timer = setInterval ()=>
