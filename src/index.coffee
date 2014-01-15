@@ -24,15 +24,13 @@ class Orange
     @stop()
     return if @current + 1 >= @count
     @current++
-    @current = @current % @count
     @goTo(@current)
     return
 
   prev : ()->
     @stop()
+    return if @current - 1 < 0
     @current--
-    if @current <= 0
-      @current = 0
     @goTo(@current)
     return
 
