@@ -21,6 +21,8 @@
 
   - `next()`: show the next slide
   - `prev()`: show the previous slide
+  - `nextLoop()`: show the and slide loop to the first one
+  - `prevLoop()`: show the previous slide and loop to the last one
   - `start(<timeout>)`: start auto slide every <timeout> (millisecond)
   - `stop()`: stop auto slide
   - `goTo(<slide_id>)`: go to the slide <slide_id> (Integer)
@@ -40,9 +42,8 @@
 
 
 <script type="text/javascript">
-  orange = require('orange')
+  var orange = require('orange')
   
-  o = new Orange(document.querySelectorAll('.orange')[0])
   o.start(4000) // 4s time out for each slide
   
   
