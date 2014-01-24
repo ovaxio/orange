@@ -9,6 +9,7 @@ class Orange
     @container.style.width = (@count * 100) + "%"
     for s in @slices
       s.style.width = (100 / @count) + "%"
+    @goTo @current
 
   getSlide : (id)->
     return @slices[@current]

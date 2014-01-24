@@ -17,6 +17,7 @@
         s = _ref[_i];
         s.style.width = (100 / this.count) + "%";
       }
+      this.goTo(this.current);
     }
 
     Orange.prototype.getSlide = function(id) {
