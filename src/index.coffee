@@ -14,12 +14,30 @@ class Orange
   getSlide : (id)->
     return @slices[@current]
 
+  hasTransform : ()->
+    if @container.style.transform != undefined
+      return "transform"
+    if @container.style.MozTransform != undefined
+      return "MozTransform"
+    if @container.style.WebkitTransform != undefined
+      return "WebkitTransform"
+    if @container.style.OTransform != undefined
+      return "OTransform"
+    if @container.style.MsTransform != undefined
+      return "MsTransform"
+    return null
+
   goTo : (id)->
     if id < 0 || id >= @count
       return
     @current = id
-    pos = id * -100
-    @container.style.left = pos + "%"
+    transformProp = @hasTransform()
+    if transformProp == null
+      pos = id * -100
+      @container.style.left = pos + "%"
+    else
+      pos = 100 / @count * @current * -1
+      @container.style[transformProp] = "translateX(#{pos}%)"
 
   next : ()->
     @stop()
@@ -49,7 +67,6 @@ class Orange
     @current = @current % @count
     @goTo(@current)
     return
-
 
   start : (t)->
     @timer = setInterval ()=>

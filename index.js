@@ -24,14 +24,39 @@
       return this.slices[this.current];
     };
 
+    Orange.prototype.hasTransform = function() {
+      if (this.container.style.transform !== void 0) {
+        return "transform";
+      }
+      if (this.container.style.MozTransform !== void 0) {
+        return "MozTransform";
+      }
+      if (this.container.style.WebkitTransform !== void 0) {
+        return "WebkitTransform";
+      }
+      if (this.container.style.OTransform !== void 0) {
+        return "OTransform";
+      }
+      if (this.container.style.MsTransform !== void 0) {
+        return "MsTransform";
+      }
+      return null;
+    };
+
     Orange.prototype.goTo = function(id) {
-      var pos;
+      var pos, transformProp;
       if (id < 0 || id >= this.count) {
         return;
       }
       this.current = id;
-      pos = id * -100;
-      return this.container.style.left = pos + "%";
+      transformProp = this.hasTransform();
+      if (transformProp === null) {
+        pos = id * -100;
+        return this.container.style.left = pos + "%";
+      } else {
+        pos = 100 / this.count * this.current * -1;
+        return this.container.style[transformProp] = "translateX(" + pos + "%)";
+      }
     };
 
     Orange.prototype.next = function() {

@@ -8,10 +8,10 @@
 .orange-skin {
   display: table;
   width: 100%;
-  transition: left ease-in-out 1s;
-  -webkit-transition: left ease-in-out 1s;
-  -moz-transition: left ease-in-out 1s;
-  -ms-transition: left ease-in-out 1s;
+  transition: all ease-in-out 1s;
+  -webkit-transition: all ease-in-out 1s;
+  -moz-transition: all ease-in-out 1s;
+  -ms-transition: all ease-in-out 1s;
   position: relative;
 }
 .orange-skin .slice {
