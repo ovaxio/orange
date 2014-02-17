@@ -43,23 +43,23 @@
 
 <script type="text/javascript">
 
-  var Slideshow = require('orange')
+  var Slideshow = require('orange');
 
-  var slideshow_container = document.querySelector('.orange')
-  var slidehow = new Slideshow(slideshow_container)
+  var slideshow_container = document.querySelector('.orange');
+  var slidehow = new Slideshow(slideshow_container);
   
   // If you want automatic slide events
-  slideshow.start(4000) // 4s time out for each slide
+  slideshow.start(4000); // 4s time out for each slide
   
   // Initialize events onclick next and prev
   slideshow_container.querySelector('.nav-next').onclick = function () {
-    o.next();
-    o.stop() // Stop auto sliding, needed if using .start()
+    slideshow.next();
+    slideshow.stop(); // Stop auto sliding, needed if using .start()
   }
 
   slideshow_container.querySelector('.nav-prev').onclick = function () {
-    o.prev();
-    o.stop() // Stop auto sliding, needed if using .start()
+    slideshow.prev();
+    slideshow.stop(); // Stop auto sliding, needed if using .start()
   }
 </script>
 ```
