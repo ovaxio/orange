@@ -3,6 +3,23 @@ doctype 5
 html
 
   head
+    link(href='src/build/build.css', rel='stylesheet', type='text/css')
+    :stylus
+      *
+        margin 0
+        padding 0
+      body
+        margin 4em auto
+        width 600px
+      .orange > a
+        display inline-block
+        font-size 2em
+        text-decoration none
+        color gray
+        background #f3f3f3
+        padding 5px 30px 11px 30px
+        margin 4px
+        line-height 1
 
   body
 
@@ -13,11 +30,10 @@ html
         li.slice
           img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=1')
         li.slice
-          img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=2')
+          img(src='http://dummyimage.com/600x200/aaa/999.jpg&text=2')
         li.slice
           img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=3')
     
-    //script(src='http://proferotech.com/Catalent-Global-Redesign/static/js/quo.min.js')
     script(src='src/build/build.js')
 
     :coffeescript
