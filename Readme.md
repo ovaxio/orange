@@ -21,8 +21,8 @@
 
   - `next()`: show the next slide
   - `prev()`: show the previous slide
-  - `nextLoop()`: show and slide loop to the first one
-  - `prevLoop()`: show the previous slide and loop to the last one
+  - `nextLoop()`: resume to first slide when on the last slide
+  - `prevLoop()`: move to the last slide when on the first slide
   - `start(<timeout>)`: start auto slide every <timeout> (millisecond)
   - `stop()`: stop auto slide
   - `goTo(<slide_id>)`: go to the slide <slide_id> (Integer)
