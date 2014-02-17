@@ -61,6 +61,22 @@
     slideshow.prev();
     slideshow.stop(); // Stop auto sliding, needed if using .start()
   }
+
+</script>
+
+// To support hand gestures, add the following:
+// quo.js library from http://quojs.tapquo.com
+<script type="text/javascript" src='quo.js'></script>
+<script type="text/javascript">
+  $$('.orange .slice').on('swipeLeft', function() {
+    slideshow.next();
+    slideshow.stop();
+  });
+
+  $$('.orange .slice').on('swipeRight', function() {
+    slideshow.prev();
+    slideshow.stop();
+  });
 </script>
 ```
 
