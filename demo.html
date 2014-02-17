@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <div class="orange"><a href="#" class="nav-prev">&lsaquo;</a><a href="#" class="nav-next">&rsaquo;</a>
+      <ol class="orange-skin">
+        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=1"></li>
+        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=2"></li>
+        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=3"></li>
+      </ol>
+    </div>
+    <!--script(src='http://proferotech.com/Catalent-Global-Redesign/static/js/quo.min.js')-->
+    <script src="src/build/build.js"></script><script type="text/javascript">
+(function() {
+  var Slideshow, slideshow, slideshow_container;
+
+  Slideshow = require('orange');
+
+  slideshow_container = document.querySelector('.orange');
+
+  slideshow = new Slideshow(slideshow_container);
+
+  slideshow_container.querySelector('.nav-next').onclick = function() {
+    slideshow.next();
+    return slideshow.stop();
+  };
+
+  slideshow_container.querySelector('.nav-prev').onclick = function() {
+    slideshow.prev();
+    return slideshow.stop();
+  };
+
+}).call(this);
+</script>
+  </body>
+</html>
