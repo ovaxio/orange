@@ -21,7 +21,7 @@
 
   - `next()`: show the next slide
   - `prev()`: show the previous slide
-  - `nextLoop()`: show the and slide loop to the first one
+  - `nextLoop()`: show and slide loop to the first one
   - `prevLoop()`: show the previous slide and loop to the last one
   - `start(<timeout>)`: start auto slide every <timeout> (millisecond)
   - `stop()`: stop auto slide
@@ -31,34 +31,40 @@
 
 ```html
 <div class="orange">
-  <div class="nav-next"></div>
-  <div class="nav-prev"></div>
-  <div class="orange-skin">
-    <div class="slice"> 1 </div>
-    <div class="slice"> 2 </div>
-    <div class="slice"> 3 </div>
-  </div>
+  <a href='#' class="nav-prev">&lsaquo;</a>
+  <a href='#' class="nav-next">&rsaquo;</a>
+  <ol class="orange-skin">
+    <li class="slice"> 1 </li>
+    <li class="slice"> 2 </li>
+    <li class="slice"> 3 </li>
+  </ol>
 </div>
 
 
 <script type="text/javascript">
-  var orange = require('orange')
+
+  var Slideshow = require('orange')
+
+  var slideshow_container = document.querySelector('.orange')
+  var slidehow = new Slideshow(slideshow_container)
   
-  o.start(4000) // 4s time out for each slide
+  // If you want automatic slide events
+  slideshow.start(4000) // 4s time out for each slide
   
-  
-  // initialize events onclick next and prev
-  document.querySelectorAll('.orange .nav-next')[0].onclick = function () {
+  // Initialize events onclick next and prev
+  slideshow_container.querySelector('.nav-next').onclick = function () {
     o.next();
-    o.stop() // Stop auto sliding
+    o.stop() // Stop auto sliding, needed if using .start()
   }
-  document.querySelectorAll('.orange .nav-prev')[0].onclick = function () {
+
+  slideshow_container.querySelector('.nav-prev').onclick = function () {
     o.prev();
-    o.stop() // Stop auto sliding
+    o.stop() // Stop auto sliding, needed if using .start()
   }
 </script>
-
 ```
+
+Then customize the appearance as you wish with CSS.
   
 
 ## License
