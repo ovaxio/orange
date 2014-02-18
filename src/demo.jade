@@ -3,7 +3,7 @@ doctype 5
 html
 
   head
-    link(href='src/build/build.css', rel='stylesheet', type='text/css')
+    link(href='src/orange.css', rel='stylesheet', type='text/css')
     :stylus
       *
         margin 0
@@ -22,6 +22,12 @@ html
         margin 4px 4px 4px 0
         line-height 1
 
+      h3
+        height 300px
+        width 100%
+        background-color #0098aa
+        
+
 
   body
 
@@ -30,24 +36,24 @@ html
       a.nav-next(href='#') &rsaquo;
       ol.orange-skin
         li.slice
-          img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=1')
+          h3 1
         li.slice
-          img(src='http://dummyimage.com/600x200/aaa/999.jpg&text=2')
+          h3 2
         li.slice
-          img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=3')
+          h3 3
+          
     
-    script(src='src/quo.js')
-    script(src='src/build/build.js')
+    script(src='src/index.js')
 
     :coffeescript
 
       window.onerror = (err) -> alert err
 
 
-      Slideshow = require 'orange'
+      #Slideshow = require 'orange'
 
       slideshow_container = document.querySelector '.orange'
-      slideshow = new Slideshow slideshow_container
+      slideshow = new Orange slideshow_container
 
       slideshow_container.querySelector('.nav-next').onclick = ->
         slideshow.next()
@@ -57,41 +63,4 @@ html
         slideshow.prev()
         slideshow.stop()
 
-      init_x = null
-      cur_x = null
-      translated = 0
-      tt = document.querySelector('.orange .orange-skin')
-      tt.addEventListener 'touchstart', (e)->
-        init_x = e.changedTouches[0].pageX
-        cur_x = init_x
-        document.querySelector('.orange .orange-skin').style.WebkitTransition = ""
-        translated = (slideshow.current * document.querySelector('.orange').clientWidth * -1)
-        
-
-      tt = document.querySelector('.orange .orange-skin')
-      tt.addEventListener 'touchmove', (e)->
-        e.preventDefault()
-        e.stopPropagation()
-        x = e.changedTouches[0].pageX
-        d = (cur_x - x)
-        translated += -1*d
-        console.log translated
-        document.querySelector('.orange .orange-skin').style.WebkitTransform = "translateX(#{translated}px)"
-        cur_x = x
-
-
-      tt = document.querySelector('.orange')
-      tt.addEventListener 'touchend', (e)->
-        e.preventDefault()
-        e.stopPropagation()
-        diff = (init_x - cur_x)
-        document.querySelector('.orange .orange-skin').style.WebkitTransition = "-webkit-transform ease-in-out 1s"
-        w = document.querySelector('.orange').clientWidth
-        console.log (diff / w * 100)
-        if (diff / w * 100) < -10
-          slideshow.prev()
-        if (diff / w * 100) > 10
-          slideshow.next()
-        slideshow.goTo(slideshow.current)
-        return
-        
+          

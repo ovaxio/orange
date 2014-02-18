@@ -3,17 +3,71 @@ class Orange
     @el = el
     @current = 0
     @timer = null
-    @container = @el.querySelectorAll('.orange-skin')[0]
+    @container = @el.querySelector('.orange-skin')
     @slices = @el.querySelectorAll('.slice')
     @count = @slices.length
     @container.style.width = (@count * 100) + "%"
+    @touch_init = 0
+    @touch_cur = 0
+    @touch_pending = false
+    @touch_tranlated = 0
     for s in @slices
       s.style.width = (100 / @count) + "%"
     @goTo @current
+    @setTransition(1)
+    @initTouchEvents()
+    @initTouch()
+    @initTransitionEnd()
 
   getSlide : (id)->
     return @slices[@current]
 
+  initTransitionEnd : ()->
+    parent = @
+    @container.addEventListener 'webkitTransitionEnd', (e)->
+      console.log "end transition"
+      
+      #parent.setTransition(0)
+      #parent.initTouch()
+
+  initTouchEvents : ()->
+    parent = @
+    @touchStart = (e)->
+      e.preventDefault()
+      parent.touch_pending = true
+      parent.touch_init = e.touches[0].pageX
+      parent.touch_cur = parent.touch_init
+      parent.setTransition(0)
+      parent.touch_translated = (parent.current * parent.el.clientWidth * -1)
+
+    @touchMove = (e)->
+      e.preventDefault()
+      x = e.touches[0].pageX
+      d = (parent.touch_cur - x)
+      parent.touch_translated += -1*d
+      parent.setTransform(parent.touch_translated+"px")
+      parent.touch_cur = x
+
+    @touchEnd = (e)->
+      e.preventDefault()
+      diff = (parent.touch_init - parent.touch_cur)
+      #parent.setTransition(0.1)
+      w = parent.el.clientWidth
+      if (diff / w * 100) < -10
+        parent.prev()
+      if (diff / w * 100) > 10
+        parent.next()
+      parent.goTo(parent.current)
+
+  initTouch : ()->
+    return if not @el.addEventListener?
+    
+    
+    @container.addEventListener "touchstart", @touchStart, true
+    @container.addEventListener "touchmove", @touchMove, true
+    @container.addEventListener "touchend", @touchEnd, true
+
+    
   hasTransform : ()->
     if @container.style.transform != undefined
       return "transform"
@@ -27,6 +81,28 @@ class Orange
       return "MsTransform"
     return null
 
+  setTransform : (pos)->
+    @container.style.transform = "translateX(#{pos})"
+    @container.style.MozTransform = "translateX(#{pos})"
+    @container.style.WebkitTransform = "translateX(#{pos})"
+    @container.style.OTransform = "translateX(#{pos})"
+    @container.style.MsTransform = "translateX(#{pos})"
+
+  setTransition : (time)->
+    if time == 0
+      @container.style.transition = ""
+      @container.style.MozTransition = ""
+      @container.style.WebkitTransition = ""
+      @container.style.OTransition = ""
+      @container.style.MsTransition = ""
+      return 
+    type = ""
+    @container.style.transition = "transform #{type} #{time}s"
+    @container.style.MozTransition = "-moz-transform #{type} #{time}s"
+    @container.style.WebkitTransition = "-webkit-transform #{type} #{time}s"
+    @container.style.OTransition = "-o-transform #{type} #{time}s"
+    @container.style.MsTransition = "-ms-transform #{type} #{time}s"
+
   goTo : (id)->
     if id < 0 || id >= @count
       return
@@ -37,7 +113,8 @@ class Orange
       @container.style.left = pos + "%"
     else
       pos = 100 / @count * @current * -1
-      @container.style[transformProp] = "translateX(#{pos}%)"
+      @setTransform(pos+"%")
+      
 
   next : ()->
     @stop()
@@ -79,7 +156,7 @@ class Orange
     if @timer
       clearInterval @timer
 
-module.exports = Orange
+#module.exports = Orange
 
 
 

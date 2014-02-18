@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link href="src/build/build.css" rel="stylesheet" type="text/css"><style type="text/css">* {
+    <link href="src/orange.css" rel="stylesheet" type="text/css"><style type="text/css">* {
   margin: 0;
   padding: 0;
 }
@@ -20,30 +20,38 @@ body {
   margin: 4px 4px 4px 0;
   line-height: 1;
 }
+h3 {
+  height: 300px;
+  width: 100%;
+  background-color: #0098aa;
+}
 </style>
   </head>
   <body>
     <div class="orange"><a href="#" class="nav-prev">&lsaquo;</a><a href="#" class="nav-next">&rsaquo;</a>
       <ol class="orange-skin">
-        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=1"></li>
-        <li class="slice"><img src="http://dummyimage.com/600x200/aaa/999.jpg&amp;text=2"></li>
-        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=3"></li>
+        <li class="slice">
+          <h3>1</h3>
+        </li>
+        <li class="slice">
+          <h3>2</h3>
+        </li>
+        <li class="slice">
+          <h3>3</h3>
+        </li>
       </ol>
     </div>
-    <script src="src/quo.js"></script>
-    <script src="src/build/build.js"></script><script type="text/javascript">
+    <script src="src/index.js"></script><script type="text/javascript">
 (function() {
-  var Slideshow, cur_x, init_x, slideshow, slideshow_container, translated, tt;
+  var slideshow, slideshow_container;
 
   window.onerror = function(err) {
     return alert(err);
   };
 
-  Slideshow = require('orange');
-
   slideshow_container = document.querySelector('.orange');
 
-  slideshow = new Slideshow(slideshow_container);
+  slideshow = new Orange(slideshow_container);
 
   slideshow_container.querySelector('.nav-next').onclick = function() {
     slideshow.next();
@@ -54,54 +62,6 @@ body {
     slideshow.prev();
     return slideshow.stop();
   };
-
-  init_x = null;
-
-  cur_x = null;
-
-  translated = 0;
-
-  tt = document.querySelector('.orange .orange-skin');
-
-  tt.addEventListener('touchstart', function(e) {
-    init_x = e.changedTouches[0].pageX;
-    cur_x = init_x;
-    document.querySelector('.orange .orange-skin').style.WebkitTransition = "";
-    return translated = slideshow.current * document.querySelector('.orange').clientWidth * -1;
-  });
-
-  tt = document.querySelector('.orange .orange-skin');
-
-  tt.addEventListener('touchmove', function(e) {
-    var d, x;
-    e.preventDefault();
-    e.stopPropagation();
-    x = e.changedTouches[0].pageX;
-    d = cur_x - x;
-    translated += -1 * d;
-    console.log(translated);
-    document.querySelector('.orange .orange-skin').style.WebkitTransform = "translateX(" + translated + "px)";
-    return cur_x = x;
-  });
-
-  tt = document.querySelector('.orange');
-
-  tt.addEventListener('touchend', function(e) {
-    var diff, w;
-    e.preventDefault();
-    e.stopPropagation();
-    diff = init_x - cur_x;
-    document.querySelector('.orange .orange-skin').style.WebkitTransition = "-webkit-transform ease-in-out 1s";
-    w = document.querySelector('.orange').clientWidth;
-    console.log(diff / w * 100);
-    if ((diff / w * 100) < -10) {
-      slideshow.prev();
-    }
-    if ((diff / w * 100) > 10) {
-      slideshow.next();
-    }
-    slideshow.goTo(slideshow.current);
-  });
 
 }).call(this);
 </script>
