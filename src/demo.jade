@@ -11,6 +11,7 @@ html
       body
         margin 4em auto
         width 600px
+        background-color #eee
       .orange > a
         display inline-block
         font-size 2em
@@ -20,6 +21,7 @@ html
         padding 5px 30px 11px 30px
         margin 4px 4px 4px 0
         line-height 1
+
 
   body
 
@@ -41,6 +43,7 @@ html
 
       window.onerror = (err) -> alert err
 
+
       Slideshow = require 'orange'
 
       slideshow_container = document.querySelector '.orange'
@@ -54,10 +57,41 @@ html
         slideshow.prev()
         slideshow.stop()
 
-      $$('.slice').on 'swipeLeft', ->
-        slideshow.next()
-        slideshow.stop()
+      init_x = null
+      cur_x = null
+      translated = 0
+      tt = document.querySelector('.orange .orange-skin')
+      tt.addEventListener 'touchstart', (e)->
+        init_x = e.changedTouches[0].pageX
+        cur_x = init_x
+        document.querySelector('.orange .orange-skin').style.WebkitTransition = ""
+        translated = (slideshow.current * document.querySelector('.orange').clientWidth * -1)
+        
 
-      $$('.slice').on 'swipeRight', ->
-        slideshow.prev()
-        slideshow.stop()
+      tt = document.querySelector('.orange .orange-skin')
+      tt.addEventListener 'touchmove', (e)->
+        e.preventDefault()
+        e.stopPropagation()
+        x = e.changedTouches[0].pageX
+        d = (cur_x - x)
+        translated += -1*d
+        console.log translated
+        document.querySelector('.orange .orange-skin').style.WebkitTransform = "translateX(#{translated}px)"
+        cur_x = x
+
+
+      tt = document.querySelector('.orange')
+      tt.addEventListener 'touchend', (e)->
+        e.preventDefault()
+        e.stopPropagation()
+        diff = (init_x - cur_x)
+        document.querySelector('.orange .orange-skin').style.WebkitTransition = "-webkit-transform ease-in-out 1s"
+        w = document.querySelector('.orange').clientWidth
+        console.log (diff / w * 100)
+        if (diff / w * 100) < -10
+          slideshow.prev()
+        if (diff / w * 100) > 10
+          slideshow.next()
+        slideshow.goTo(slideshow.current)
+        return
+        
