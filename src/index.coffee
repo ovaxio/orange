@@ -9,11 +9,14 @@ class Orange
     @container.style.width = (@count * 100) + "%"
     @touch_init = 0
     @touch_cur = 0
-    @touch_pending = false
+    @touch_transition_pending = false
     @touch_tranlated = 0
     for s in @slices
       s.style.width = (100 / @count) + "%"
     @goTo @current
+    @touchStart = ()->
+    @touchMove = ()->
+    @touchEnd = ()->
     @setTransition(1)
     @initTouchEvents()
     @initTouch()
@@ -25,16 +28,13 @@ class Orange
   initTransitionEnd : ()->
     parent = @
     @container.addEventListener 'webkitTransitionEnd', (e)->
-      console.log "end transition"
-      
-      #parent.setTransition(0)
-      #parent.initTouch()
+      parent.initTouch()
 
   initTouchEvents : ()->
     parent = @
+    
     @touchStart = (e)->
       e.preventDefault()
-      parent.touch_pending = true
       parent.touch_init = e.touches[0].pageX
       parent.touch_cur = parent.touch_init
       parent.setTransition(0)
@@ -50,22 +50,24 @@ class Orange
 
     @touchEnd = (e)->
       e.preventDefault()
+      parent.container.removeEventListener "touchstart", parent.touchStart, false
+      parent.container.removeEventListener "touchmove", parent.touchMove, false
+      parent.container.removeEventListener "touchend", parent.touchEnd, false
       diff = (parent.touch_init - parent.touch_cur)
-      #parent.setTransition(0.1)
       w = parent.el.clientWidth
       if (diff / w * 100) < -10
         parent.prev()
+        return
       if (diff / w * 100) > 10
         parent.next()
+        return
       parent.goTo(parent.current)
 
   initTouch : ()->
     return if not @el.addEventListener?
-    
-    
-    @container.addEventListener "touchstart", @touchStart, true
-    @container.addEventListener "touchmove", @touchMove, true
-    @container.addEventListener "touchend", @touchEnd, true
+    @container.addEventListener "touchstart", @touchStart, false
+    @container.addEventListener "touchmove", @touchMove, false
+    @container.addEventListener "touchend", @touchEnd, false
 
     
   hasTransform : ()->
@@ -112,6 +114,7 @@ class Orange
       pos = id * -100
       @container.style.left = pos + "%"
     else
+      @setTransition(1)
       pos = 100 / @count * @current * -1
       @setTransform(pos+"%")
       

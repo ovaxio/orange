@@ -13,7 +13,7 @@ Orange = (function() {
     this.container.style.width = (this.count * 100) + "%";
     this.touch_init = 0;
     this.touch_cur = 0;
-    this.touch_pending = false;
+    this.touch_transition_pending = false;
     this.touch_tranlated = 0;
     _ref = this.slices;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -21,6 +21,9 @@ Orange = (function() {
       s.style.width = (100 / this.count) + "%";
     }
     this.goTo(this.current);
+    this.touchStart = function() {};
+    this.touchMove = function() {};
+    this.touchEnd = function() {};
     this.setTransition(1);
     this.initTouchEvents();
     this.initTouch();
@@ -35,7 +38,7 @@ Orange = (function() {
     var parent;
     parent = this;
     return this.container.addEventListener('webkitTransitionEnd', function(e) {
-      return console.log("end transition");
+      return parent.initTouch();
     });
   };
 
@@ -44,7 +47,6 @@ Orange = (function() {
     parent = this;
     this.touchStart = function(e) {
       e.preventDefault();
-      parent.touch_pending = true;
       parent.touch_init = e.touches[0].pageX;
       parent.touch_cur = parent.touch_init;
       parent.setTransition(0);
@@ -62,13 +64,18 @@ Orange = (function() {
     return this.touchEnd = function(e) {
       var diff, w;
       e.preventDefault();
+      parent.container.removeEventListener("touchstart", parent.touchStart, false);
+      parent.container.removeEventListener("touchmove", parent.touchMove, false);
+      parent.container.removeEventListener("touchend", parent.touchEnd, false);
       diff = parent.touch_init - parent.touch_cur;
       w = parent.el.clientWidth;
       if ((diff / w * 100) < -10) {
         parent.prev();
+        return;
       }
       if ((diff / w * 100) > 10) {
         parent.next();
+        return;
       }
       return parent.goTo(parent.current);
     };
@@ -78,9 +85,9 @@ Orange = (function() {
     if (this.el.addEventListener == null) {
       return;
     }
-    this.container.addEventListener("touchstart", this.touchStart, true);
-    this.container.addEventListener("touchmove", this.touchMove, true);
-    return this.container.addEventListener("touchend", this.touchEnd, true);
+    this.container.addEventListener("touchstart", this.touchStart, false);
+    this.container.addEventListener("touchmove", this.touchMove, false);
+    return this.container.addEventListener("touchend", this.touchEnd, false);
   };
 
   Orange.prototype.hasTransform = function() {
@@ -139,6 +146,7 @@ Orange = (function() {
       pos = id * -100;
       return this.container.style.left = pos + "%";
     } else {
+      this.setTransition(1);
       pos = 100 / this.count * this.current * -1;
       return this.setTransform(pos + "%");
     }
