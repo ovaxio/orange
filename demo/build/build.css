@@ -1,0 +1,21 @@
+.orange {
+  width: 100%;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  vertical-align: top;
+  position: relative;
+}
+.orange-skin {
+  display: table;
+  width: 100%;
+  position: relative;
+}
+.orange-skin .slice {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing: border-box;
+  width: 100%;
+  display: table-cell;
+  position: relative;
+}
