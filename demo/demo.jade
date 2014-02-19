@@ -1,0 +1,57 @@
+doctype 5
+
+html
+
+  head
+    link(href='components/build/build.css', rel='stylesheet', type='text/css')
+    :stylus
+      *
+        margin 0
+        padding 0
+      body
+        margin 4em auto
+        width 600px
+        background-color #eee
+      .orange > a
+        display inline-block
+        font-size 2em
+        text-decoration none
+        color gray
+        background #f3f3f3
+        padding 5px 30px 11px 30px
+        margin 4px 4px 4px 0
+        line-height 1
+
+
+  body
+
+    .orange
+      a.nav-prev(href='#') &lsaquo;
+      a.nav-next(href='#') &rsaquo;
+      ol.orange-skin
+        li.slice
+          img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=1')
+        li.slice
+          img(src='http://dummyimage.com/600x200/aaa/999.jpg&text=2')
+        li.slice
+          img(src='http://dummyimage.com/600x200/dedede/ccc.jpg&text=3')
+    
+    script(src='components/build/build.js')
+
+    :coffeescript
+
+      window.onerror = (err) -> alert err
+
+
+      Slideshow = require 'orange'
+
+      slideshow_container = document.querySelector '.orange'
+      slideshow = new Slideshow slideshow_container
+
+      slideshow_container.querySelector('.nav-next').onclick = ->
+        slideshow.next()
+        slideshow.stop()
+
+      slideshow_container.querySelector('.nav-prev').onclick = ->
+        slideshow.prev()
+        slideshow.stop()
