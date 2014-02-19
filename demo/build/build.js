@@ -232,7 +232,11 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
       this.setTransition(1);
       this.initTouchEvents();
       this.initTransitionEnd();
-      this.setTouchable(true);
+      if (this.el.removeEventListener != null) {
+        this.setTouchable(true);
+      } else {
+        this.setTouchable(false);
+      }
     }
 
     Orange.prototype.getSlide = function(id) {
@@ -250,10 +254,16 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
     };
 
     Orange.prototype.isTouchable = function() {
+      if (this.el.removeEventListener == null) {
+        return false;
+      }
       return this.is_touchable;
     };
 
     Orange.prototype.desactivateTransitionEnd = function() {
+      if (this.el.removeEventListener == null) {
+        return;
+      }
       this.container.removeEventListener('webkitTransitionEnd', this.transitionEnd);
       this.container.removeEventListener('mozTransitionEnd', this.transitionEnd);
       this.container.removeEventListener('MSTransitionEnd', this.transitionEnd);
@@ -270,6 +280,9 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
     };
 
     Orange.prototype.activateTransitionEnd = function() {
+      if (this.el.addEventListener == null) {
+        return;
+      }
       this.container.addEventListener('webkitTransitionEnd', this.transitionEnd);
       this.container.addEventListener('mozTransitionEnd', this.transitionEnd);
       this.container.addEventListener('MSTransitionEnd', this.transitionEnd);
@@ -315,6 +328,9 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
     };
 
     Orange.prototype.desactivateTouch = function() {
+      if (this.el.removeEventListener == null) {
+        return;
+      }
       this.container.removeEventListener("touchstart", this.touchStart, false);
       this.container.removeEventListener("touchmove", this.touchMove, false);
       return this.container.removeEventListener("touchend", this.touchEnd, false);
