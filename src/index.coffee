@@ -13,22 +13,50 @@ class Orange
     @touch_tranlated = 0
     for s in @slices
       s.style.width = (100 / @count) + "%"
+    @is_touchable = true
     @goTo @current
     @touchStart = ()->
     @touchMove = ()->
     @touchEnd = ()->
+    @transitionEnd = ()->
     @setTransition(1)
     @initTouchEvents()
-    @initTouch()
     @initTransitionEnd()
+    @setTouchable(true)
 
   getSlide : (id)->
     return @slices[@current]
 
+  setTouchable : (b)->
+    @is_touchable = b
+    @desactivateTransitionEnd()
+    @desactivateTouch()
+    if b == true
+      @activateTouch()
+      @activateTransitionEnd()
+
+  isTouchable : ()->
+    return @is_touchable
+
+  desactivateTransitionEnd : ()->
+    @container.removeEventListener 'webkitTransitionEnd', @transitionEnd
+    @container.removeEventListener 'mozTransitionEnd', @transitionEnd
+    @container.removeEventListener 'MSTransitionEnd', @transitionEnd
+    @container.removeEventListener 'oTransitionEnd', @transitionEnd
+    @container.removeEventListener 'transitionend', @transitionEnd
+
   initTransitionEnd : ()->
     parent = @
-    @container.addEventListener 'webkitTransitionEnd', (e)->
-      parent.initTouch()
+    @transitionEnd = (e)->
+      parent.activateTouch()
+    
+
+  activateTransitionEnd : ()->
+    @container.addEventListener 'webkitTransitionEnd', @transitionEnd
+    @container.addEventListener 'mozTransitionEnd', @transitionEnd
+    @container.addEventListener 'MSTransitionEnd', @transitionEnd
+    @container.addEventListener 'oTransitionEnd', @transitionEnd
+    @container.addEventListener 'transitionend', @transitionEnd
 
   initTouchEvents : ()->
     parent = @
@@ -50,20 +78,22 @@ class Orange
 
     @touchEnd = (e)->
       e.preventDefault()
-      parent.container.removeEventListener "touchstart", parent.touchStart, false
-      parent.container.removeEventListener "touchmove", parent.touchMove, false
-      parent.container.removeEventListener "touchend", parent.touchEnd, false
       diff = (parent.touch_init - parent.touch_cur)
       w = parent.el.clientWidth
+      last_pos = parent.current
       if (diff / w * 100) < -10
         parent.prev()
-        return
       if (diff / w * 100) > 10
         parent.next()
-        return
-      parent.goTo(parent.current)
+      if last_pos == parent.current
+        parent.goTo(parent.current)
 
-  initTouch : ()->
+  desactivateTouch : ()->
+    @container.removeEventListener "touchstart", @touchStart, false
+    @container.removeEventListener "touchmove", @touchMove, false
+    @container.removeEventListener "touchend", @touchEnd, false
+
+  activateTouch : ()->
     return if not @el.addEventListener?
     @container.addEventListener "touchstart", @touchStart, false
     @container.addEventListener "touchmove", @touchMove, false
@@ -106,6 +136,8 @@ class Orange
     @container.style.MsTransition = "-ms-transform #{type} #{time}s"
 
   goTo : (id)->
+    if @isTouchable()
+      @desactivateTouch()
     if id < 0 || id >= @count
       return
     @current = id
@@ -117,7 +149,6 @@ class Orange
       @setTransition(1)
       pos = 100 / @count * @current * -1
       @setTransform(pos+"%")
-      
 
   next : ()->
     @stop()
@@ -159,7 +190,7 @@ class Orange
     if @timer
       clearInterval @timer
 
-#module.exports = Orange
+module.exports = Orange
 
 
 

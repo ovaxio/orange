@@ -1,7 +1,0 @@
-{
-    "name" : "Orange slideshow demo",
-    "dependencies": {
-      "tuxlinuxien/orange": "*"
-    }
-}
-
