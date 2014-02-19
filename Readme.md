@@ -50,6 +50,9 @@
   var slideshow_container = document.querySelector('.orange');
   var slideshow = new Slideshow(slideshow_container);
   
+  // If you want to remove touch events support
+  slideshow.setTouchable(false) // Default is true when instance is created
+  
   // If you want automatic slide events
   slideshow.start(4000); // 4s time out for each slide
   
@@ -66,20 +69,6 @@
 
 </script>
 
-// To support hand gestures, add the following:
-// quo.js library from http://quojs.tapquo.com
-<script type="text/javascript" src='quo.js'></script>
-<script type="text/javascript">
-  $$('.orange .slice').on('swipeLeft', function() {
-    slideshow.next();
-    slideshow.stop();
-  });
-
-  $$('.orange .slice').on('swipeRight', function() {
-    slideshow.prev();
-    slideshow.stop();
-  });
-</script>
 ```
 
 Then customize the appearance as you wish with CSS.
