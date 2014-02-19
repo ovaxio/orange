@@ -26,6 +26,8 @@
   - `start(<timeout>)`: start auto slide every <timeout> (millisecond)
   - `stop()`: stop auto slide
   - `goTo(<slide_id>)`: go to the slide <slide_id> (Integer)
+  - `setTouchable(<b>)`: set touchable behavior. True by default (boolean)
+  - `isTouchable()`: give the current behavior of the Orange instance (return true/false)
 
 ## Usage
 

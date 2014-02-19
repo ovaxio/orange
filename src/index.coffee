@@ -49,7 +49,6 @@ class Orange
     parent = @
     @transitionEnd = (e)->
       parent.activateTouch()
-    
 
   activateTransitionEnd : ()->
     @container.addEventListener 'webkitTransitionEnd', @transitionEnd
