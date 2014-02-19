@@ -22,7 +22,10 @@ class Orange
     @setTransition(1)
     @initTouchEvents()
     @initTransitionEnd()
-    @setTouchable(true)
+    if @el.removeEventListener?
+      @setTouchable(true)
+    else
+      @setTouchable(false)
 
   getSlide : (id)->
     return @slices[@current]
@@ -36,9 +39,11 @@ class Orange
       @activateTransitionEnd()
 
   isTouchable : ()->
+    return false if not @el.removeEventListener?
     return @is_touchable
 
   desactivateTransitionEnd : ()->
+    return if not @el.removeEventListener?
     @container.removeEventListener 'webkitTransitionEnd', @transitionEnd
     @container.removeEventListener 'mozTransitionEnd', @transitionEnd
     @container.removeEventListener 'MSTransitionEnd', @transitionEnd
@@ -51,6 +56,7 @@ class Orange
       parent.activateTouch()
 
   activateTransitionEnd : ()->
+    return if not @el.addEventListener?
     @container.addEventListener 'webkitTransitionEnd', @transitionEnd
     @container.addEventListener 'mozTransitionEnd', @transitionEnd
     @container.addEventListener 'MSTransitionEnd', @transitionEnd
@@ -88,6 +94,7 @@ class Orange
         parent.goTo(parent.current)
 
   desactivateTouch : ()->
+    return if not @el.removeEventListener?
     @container.removeEventListener "touchstart", @touchStart, false
     @container.removeEventListener "touchmove", @touchMove, false
     @container.removeEventListener "touchend", @touchEnd, false
