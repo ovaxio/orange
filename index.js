@@ -22,12 +22,12 @@
         s.style.width = (100 / this.count) + "%";
       }
       this.is_touchable = true;
-      this.goTo(this.current);
+      this.setTransform("0%");
+      this.container.style.left = "0%";
       this.touchStart = function() {};
       this.touchMove = function() {};
       this.touchEnd = function() {};
       this.transitionEnd = function() {};
-      this.setTransition(1);
       this.initTouchEvents();
       this.initTransitionEnd();
       if (this.el.removeEventListener != null) {
@@ -35,7 +35,6 @@
       } else {
         this.setTouchable(false);
       }
-      this.isScrollY = false;
     }
 
     Orange.prototype.getSlide = function(id) {
@@ -97,14 +96,11 @@
         parent.touch_init = e.touches[0];
         parent.touch_cur = parent.touch_init;
         parent.setTransition(0);
-        parent.touch_translated = parent.current * parent.el.clientWidth * -1;
-        return parent.isScrollY = false;
+        return parent.touch_translated = parent.current * parent.el.clientWidth * -1;
       };
       this.touchMove = function(e) {
         var d, scroll_x, scroll_y, x;
-        if (parent.isScrollY) {
-          return;
-        }
+        e.preventDefault();
         scroll_y = parent.touch_init.pageY - e.touches[0].pageY;
         if (scroll_y < 0) {
           scroll_y *= -1;
@@ -112,12 +108,6 @@
         scroll_x = parent.touch_init.pageX - e.touches[0].pageX;
         if (scroll_x < 0) {
           scroll_x *= -1;
-        }
-        if ((scroll_y / scroll_x) < 2) {
-          e.preventDefault();
-        } else {
-          parent.isScrollY = true;
-          return;
         }
         x = e.touches[0].pageX;
         d = parent.touch_cur.pageX - x;
@@ -127,9 +117,6 @@
       };
       return this.touchEnd = function(e) {
         var diff, last_pos, w;
-        if (parent.isScrollY) {
-          return;
-        }
         e.preventDefault();
         diff = parent.touch_init.pageX - parent.touch_cur.pageX;
         w = parent.el.clientWidth;

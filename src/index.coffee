@@ -14,19 +14,18 @@ class Orange
     for s in @slices
       s.style.width = (100 / @count) + "%"
     @is_touchable = true
-    @goTo @current
+    @setTransform("0%")
+    @container.style.left = "0%"
     @touchStart = ()->
     @touchMove = ()->
     @touchEnd = ()->
     @transitionEnd = ()->
-    @setTransition(1)
     @initTouchEvents()
     @initTransitionEnd()
     if @el.removeEventListener?
       @setTouchable(true)
     else
       @setTouchable(false)
-    @isScrollY = false
 
   getSlide : (id)->
     return @slices[@current]
@@ -73,19 +72,13 @@ class Orange
       parent.touch_cur = parent.touch_init
       parent.setTransition(0)
       parent.touch_translated = (parent.current * parent.el.clientWidth * -1)
-      parent.isScrollY = false
 
     @touchMove = (e)->
-      return if parent.isScrollY
+      e.preventDefault()
       scroll_y = (parent.touch_init.pageY - e.touches[0].pageY)
       scroll_y *= -1 if scroll_y < 0
       scroll_x = (parent.touch_init.pageX - e.touches[0].pageX)
       scroll_x *= -1 if scroll_x < 0
-      if (scroll_y / scroll_x) < 2
-        e.preventDefault()
-      else
-        parent.isScrollY =  true
-        return 
       x = e.touches[0].pageX
       d = (parent.touch_cur.pageX - x)
       parent.touch_translated += -1*d
@@ -93,7 +86,6 @@ class Orange
       parent.touch_cur = e.touches[0]
 
     @touchEnd = (e)->
-      return if parent.isScrollY
       e.preventDefault()
       diff = (parent.touch_init.pageX - parent.touch_cur.pageX)
       w = parent.el.clientWidth

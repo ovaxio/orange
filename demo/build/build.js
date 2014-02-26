@@ -224,12 +224,12 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
         s.style.width = (100 / this.count) + "%";
       }
       this.is_touchable = true;
-      this.goTo(this.current);
+      this.setTransform("0%");
+      this.container.style.left = "0%";
       this.touchStart = function() {};
       this.touchMove = function() {};
       this.touchEnd = function() {};
       this.transitionEnd = function() {};
-      this.setTransition(1);
       this.initTouchEvents();
       this.initTransitionEnd();
       if (this.el.removeEventListener != null) {
@@ -318,6 +318,7 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
         if ((scroll_y / scroll_x) < 2) {
           e.preventDefault();
         } else {
+          console.log("true");
           parent.isScrollY = true;
           return;
         }
