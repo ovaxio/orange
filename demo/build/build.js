@@ -237,6 +237,7 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
       } else {
         this.setTouchable(false);
       }
+      this.isScrollY = false;
     }
 
     Orange.prototype.getSlide = function(id) {
@@ -295,24 +296,44 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
       parent = this;
       this.touchStart = function(e) {
         e.preventDefault();
-        parent.touch_init = e.touches[0].pageX;
+        parent.touch_init = e.touches[0];
         parent.touch_cur = parent.touch_init;
         parent.setTransition(0);
-        return parent.touch_translated = parent.current * parent.el.clientWidth * -1;
+        parent.touch_translated = parent.current * parent.el.clientWidth * -1;
+        return parent.isScrollY = false;
       };
       this.touchMove = function(e) {
-        var d, x;
-        e.preventDefault();
+        var d, scroll_x, scroll_y, x;
+        if (parent.isScrollY) {
+          return;
+        }
+        scroll_y = parent.touch_init.pageY - e.touches[0].pageY;
+        if (scroll_y < 0) {
+          scroll_y *= -1;
+        }
+        scroll_x = parent.touch_init.pageX - e.touches[0].pageX;
+        if (scroll_x < 0) {
+          scroll_x *= -1;
+        }
+        if ((scroll_y / scroll_x) < 2) {
+          e.preventDefault();
+        } else {
+          parent.isScrollY = true;
+          return;
+        }
         x = e.touches[0].pageX;
-        d = parent.touch_cur - x;
+        d = parent.touch_cur.pageX - x;
         parent.touch_translated += -1 * d;
         parent.setTransform(parent.touch_translated + "px");
-        return parent.touch_cur = x;
+        return parent.touch_cur = e.touches[0];
       };
       return this.touchEnd = function(e) {
         var diff, last_pos, w;
+        if (parent.isScrollY) {
+          return;
+        }
         e.preventDefault();
-        diff = parent.touch_init - parent.touch_cur;
+        diff = parent.touch_init.pageX - parent.touch_cur.pageX;
         w = parent.el.clientWidth;
         last_pos = parent.current;
         if ((diff / w * 100) < -10) {
