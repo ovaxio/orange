@@ -64,6 +64,7 @@
       this.touch_translated = 0;
       touch = ev.touches[0];
       console.log(ev.touches);
+      return;
       return this.down = {
         x: touch.pageX,
         y: touch.pageY

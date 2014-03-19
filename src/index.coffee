@@ -50,8 +50,9 @@ class Orange
     @dx = 0;
     @updown = null;
     @touch_translated = 0
-    touch = ev.touches[0]
     console.log ev.touches
+    return
+    touch = ev.touches[0]
     return 
     @down = 
       x: touch.pageX
