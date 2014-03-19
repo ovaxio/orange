@@ -299,6 +299,9 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
         parent.touch_init = e.touches[0];
         parent.touch_cur = parent.touch_init;
         parent.setTransition(0);
+        parent.el.onscroll = function () {
+          alert("toto");
+        }
         parent.touch_translated = parent.current * parent.el.clientWidth * -1;
         return parent.isScrollY = false;
       };

@@ -1,3 +1,12 @@
+transitionend = require('transitionend-property')
+transform = require('transform-property')
+touchAction = require('touchaction-property')
+has3d = require('has-translate3d')
+style = require('computed-style')
+Emitter = require('emitter')
+event = require('event')
+events = require('events')
+
 class Orange
   constructor : (el)->
     @el = el
@@ -7,61 +16,67 @@ class Orange
     @slices = @el.querySelectorAll('.slice')
     @count = @slices.length
     @container.style.width = (@count * 100) + "%"
-    @touch_init = 0
-    @touch_cur = 0
-    @touch_transition_pending = false
-    @touch_tranlated = 0
     for s in @slices
       s.style.width = (100 / @count) + "%"
-    @is_touchable = true
     @setTransform("0%")
     @container.style.left = "0%"
-    @touchStart = ()->
-    @touchMove = ()->
-    @touchEnd = ()->
-    @transitionEnd = ()->
-    @initTouchEvents()
-    @initTransitionEnd()
-    if @el.removeEventListener?
-      @setTouchable(true)
-    else
-      @setTouchable(false)
+    @bind()
 
   getSlide : (id)->
     return @slices[@current]
 
-  setTouchable : (b)->
-    @is_touchable = b
-    @desactivateTransitionEnd()
-    @desactivateTouch()
-    if b == true
-      @activateTouch()
-      @activateTransitionEnd()
+  bind : ()->
+    @events = events(@el, @);
+    @docEvents = events(document, @);
 
-  isTouchable : ()->
-    return false if not @el.removeEventListener?
-    return @is_touchable
+    #standard mouse click events
+    @events.bind('mousedown', 'ontouchstart');
+    @events.bind('mousemove', 'ontouchmove');
+    @docEvents.bind('mouseup', 'ontouchend');
 
-  desactivateTransitionEnd : ()->
-    return if not @el.removeEventListener?
-    @container.removeEventListener 'webkitTransitionEnd', @transitionEnd
-    @container.removeEventListener 'mozTransitionEnd', @transitionEnd
-    @container.removeEventListener 'MSTransitionEnd', @transitionEnd
-    @container.removeEventListener 'oTransitionEnd', @transitionEnd
-    @container.removeEventListener 'transitionend', @transitionEnd
+    #W3C touch events
+    @events.bind('touchstart');
+    @events.bind('touchmove');
+    @docEvents.bind('touchend');
 
-  initTransitionEnd : ()->
-    parent = @
-    @transitionEnd = (e)->
-      parent.activateTouch()
+    #MS IE touch events
+    @events.bind('PointerDown', 'ontouchstart');
+    @events.bind('PointerMove', 'ontouchmove');
+    @docEvents.bind('PointerUp', 'ontouchstart');
 
-  activateTransitionEnd : ()->
-    return if not @el.addEventListener?
-    @container.addEventListener 'webkitTransitionEnd', @transitionEnd
-    @container.addEventListener 'mozTransitionEnd', @transitionEnd
-    @container.addEventListener 'MSTransitionEnd', @transitionEnd
-    @container.addEventListener 'oTransitionEnd', @transitionEnd
-    @container.addEventListener 'transitionend', @transitionEnd
+
+  ontouchstart : (ev)->
+    @setTransition(0)
+    @dx = 0;
+    @updown = null;
+    @touch_translated = 0
+    touch = ev.touches[0]
+    @down
+      x: touch.pageX
+      y: touch.pageY
+
+  ontouchmove : (ev)->
+    return if !this.down or this.updown
+    touch = ev.touches[0]
+
+    down = @down;
+    x = touch.pageX;
+    @dx = x - down.x;
+
+    if null == @updown
+      y = touch.pageY;
+      dy = y - down.y;
+      slope = dy / @dx;
+
+      if slope > 1 or slope < -1
+        @updown = true;
+        return;
+      else
+        @updown = false
+    ev.preventDefault()
+    d = (down.x - x)
+    console.log d
+    
 
   initTouchEvents : ()->
     parent = @
@@ -70,7 +85,7 @@ class Orange
       e.preventDefault()
       parent.touch_init = e.touches[0]
       parent.touch_cur = parent.touch_init
-      parent.setTransition(0)
+      parent.
       parent.touch_translated = (parent.current * parent.el.clientWidth * -1)
 
     @touchMove = (e)->
@@ -96,18 +111,6 @@ class Orange
         parent.next()
       if last_pos == parent.current
         parent.goTo(parent.current)
-
-  desactivateTouch : ()->
-    return if not @el.removeEventListener?
-    @container.removeEventListener "touchstart", @touchStart, false
-    @container.removeEventListener "touchmove", @touchMove, false
-    @container.removeEventListener "touchend", @touchEnd, false
-
-  activateTouch : ()->
-    return if not @el.addEventListener?
-    @container.addEventListener "touchstart", @touchStart, false
-    @container.addEventListener "touchmove", @touchMove, false
-    @container.addEventListener "touchend", @touchEnd, false
 
     
   hasTransform : ()->
@@ -138,7 +141,7 @@ class Orange
       @container.style.OTransition = ""
       @container.style.MsTransition = ""
       return 
-    type = ""
+    type = "ease-in-out"
     @container.style.transition = "transform #{type} #{time}s"
     @container.style.MozTransition = "-moz-transform #{type} #{time}s"
     @container.style.WebkitTransition = "-webkit-transform #{type} #{time}s"

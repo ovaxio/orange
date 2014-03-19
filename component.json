@@ -4,7 +4,16 @@
   "description": "slideshow",
   "version": "0.1.1",
   "keywords": [],
-  "dependencies": {},
+  "dependencies": {
+    "component/emitter": "1.0.0",
+    "component/event": "0.1.0",
+    "component/events": "1.0.2",
+    "component/has-translate3d": "0.0.2",
+    "component/touchaction-property": "0.0.1",
+    "component/transform-property": "0.0.1",
+    "component/transitionend-property": "0.0.2",
+    "jkroso/computed-style": "0.1.0"
+  },
   "development": {},
   "license": "MIT",
   "main": "index.js",
