@@ -161,7 +161,7 @@
           parent.next();
         }
         if (last_pos === parent.current) {
-          return parent.goTo(parent.current);
+          return this.goTo(parent.current);
         }
       };
     };
@@ -213,9 +213,6 @@
 
     Orange.prototype.goTo = function(id) {
       var pos, transformProp;
-      if (this.isTouchable()) {
-        this.desactivateTouch();
-      }
       if (id < 0 || id >= this.count) {
         return;
       }

@@ -123,7 +123,7 @@ class Orange
       if (diff / w * 100) > 10
         parent.next()
       if last_pos == parent.current
-        parent.goTo(parent.current)
+        @goTo(parent.current)
 
     
   hasTransform : ()->
@@ -162,8 +162,6 @@ class Orange
     @container.style.MsTransition = "-ms-transform #{type} #{time}s"
 
   goTo : (id)->
-    if @isTouchable()
-      @desactivateTouch()
     if id < 0 || id >= @count
       return
     @current = id
