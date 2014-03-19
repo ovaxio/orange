@@ -118,52 +118,8 @@
         this.next();
       }
       if (last_pos === this.current) {
-        return parent.goTo(this.current);
+        return this.goTo(this.current);
       }
-    };
-
-    Orange.prototype.initTouchEvents = function() {
-      var parent;
-      parent = this;
-      this.touchStart = function(e) {
-        e.preventDefault();
-        parent.touch_init = e.touches[0];
-        parent.touch_cur = parent.touch_init;
-        return parent.parent.touch_translated = parent.current * parent.el.clientWidth * -1;
-      };
-      this.touchMove = function(e) {
-        var d, scroll_x, scroll_y, x;
-        e.preventDefault();
-        scroll_y = parent.touch_init.pageY - e.touches[0].pageY;
-        if (scroll_y < 0) {
-          scroll_y *= -1;
-        }
-        scroll_x = parent.touch_init.pageX - e.touches[0].pageX;
-        if (scroll_x < 0) {
-          scroll_x *= -1;
-        }
-        x = e.touches[0].pageX;
-        d = parent.touch_cur.pageX - x;
-        parent.touch_translated += -1 * d;
-        parent.setTransform(parent.touch_translated + "px");
-        return parent.touch_cur = e.touches[0];
-      };
-      return this.touchEnd = function(e) {
-        var diff, last_pos, w;
-        e.preventDefault();
-        diff = parent.touch_init.pageX - parent.touch_cur.pageX;
-        w = parent.el.clientWidth;
-        last_pos = parent.current;
-        if ((diff / w * 100) < -10) {
-          parent.prev();
-        }
-        if ((diff / w * 100) > 10) {
-          parent.next();
-        }
-        if (last_pos === parent.current) {
-          return this.goTo(parent.current);
-        }
-      };
     };
 
     Orange.prototype.hasTransform = function() {

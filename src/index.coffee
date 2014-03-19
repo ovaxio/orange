@@ -89,41 +89,8 @@ class Orange
     if (@dx / w * 100) > 10
       @next()
     if last_pos == @current
-      parent.goTo(@current)
+      @goTo(@current)
 
-  initTouchEvents : ()->
-    parent = @
-    
-    @touchStart = (e)->
-      e.preventDefault()
-      parent.touch_init = e.touches[0]
-      parent.touch_cur = parent.touch_init
-      parent.
-      parent.touch_translated = (parent.current * parent.el.clientWidth * -1)
-
-    @touchMove = (e)->
-      e.preventDefault()
-      scroll_y = (parent.touch_init.pageY - e.touches[0].pageY)
-      scroll_y *= -1 if scroll_y < 0
-      scroll_x = (parent.touch_init.pageX - e.touches[0].pageX)
-      scroll_x *= -1 if scroll_x < 0
-      x = e.touches[0].pageX
-      d = (parent.touch_cur.pageX - x)
-      parent.touch_translated += -1*d
-      parent.setTransform(parent.touch_translated+"px")
-      parent.touch_cur = e.touches[0]
-
-    @touchEnd = (e)->
-      e.preventDefault()
-      diff = (parent.touch_init.pageX - parent.touch_cur.pageX)
-      w = parent.el.clientWidth
-      last_pos = parent.current
-      if (diff / w * 100) < -10
-        parent.prev()
-      if (diff / w * 100) > 10
-        parent.next()
-      if last_pos == parent.current
-        @goTo(parent.current)
 
     
   hasTransform : ()->
