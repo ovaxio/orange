@@ -62,8 +62,9 @@
       this.dx = 0;
       this.updown = null;
       this.touch_translated = 0;
-      touch = ev.touches[0];
       console.log(ev.touches);
+      return;
+      touch = ev.touches[0];
       return;
       return this.down = {
         x: touch.pageX,

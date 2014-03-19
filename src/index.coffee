@@ -46,19 +46,19 @@ class Orange
 
 
   ontouchstart : (ev)->
+    return if ev.touches[0]?
     @setTransition(0)
     @dx = 0;
     @updown = null;
     @touch_translated = 0
-    console.log ev.touches
-    return
+    console.log 
     touch = ev.touches[0]
-    return 
     @down = 
       x: touch.pageX
       y: touch.pageY
 
   ontouchmove : (ev)->
+    return if ev.touches[0]?
     return if !this.down or this.updown
     touch = ev.touches[0]
 
