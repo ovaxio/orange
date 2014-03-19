@@ -51,7 +51,7 @@ class Orange
     @updown = null;
     @touch_translated = 0
     touch = ev.touches[0]
-    @down
+    @down = 
       x: touch.pageX
       y: touch.pageY
 
