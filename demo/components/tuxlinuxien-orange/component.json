@@ -1,0 +1,20 @@
+{
+  "name": "orange",
+  "repo": "tuxlinuxien/orange",
+  "description": "slideshow",
+  "version": "0.1.2",
+  "keywords": [],
+  "dependencies": {
+    "component/event": "*",
+    "component/events": "*"
+  },
+  "development": {},
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ],
+  "styles": [
+    "orange.css"
+  ]
+}
