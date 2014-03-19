@@ -48,7 +48,7 @@ class Orange
   ontouchstart : (ev)->
     return if not ev.touches?
     @setTransition(0)
-    @dx_init = @current * @el.clientWidth
+    @dx_init = @current * @el.clientWidth * -1
     @dx = 0
     @updown = null;
     @touch_translated = 0

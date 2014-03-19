@@ -62,7 +62,7 @@
         return;
       }
       this.setTransition(0);
-      this.dx_init = this.current * this.el.clientWidth;
+      this.dx_init = this.current * this.el.clientWidth * -1;
       this.dx = 0;
       this.updown = null;
       this.touch_translated = 0;
