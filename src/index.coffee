@@ -46,7 +46,7 @@ class Orange
 
 
   ontouchstart : (ev)->
-    return if ev.touches
+    return if ev.touches?
     @setTransition(0)
     @dx = 0;
     @updown = null;
@@ -80,6 +80,7 @@ class Orange
     d = (down.x - x)
     console.log d
     
+  ontouchend : (ev)->
 
   initTouchEvents : ()->
     parent = @

@@ -58,7 +58,7 @@
 
     Orange.prototype.ontouchstart = function(ev) {
       var touch;
-      if (ev.touches) {
+      if (ev.touches != null) {
         return;
       }
       this.setTransition(0);
@@ -100,6 +100,8 @@
       d = down.x - x;
       return console.log(d);
     };
+
+    Orange.prototype.ontouchend = function(ev) {};
 
     Orange.prototype.initTouchEvents = function() {
       var parent;
