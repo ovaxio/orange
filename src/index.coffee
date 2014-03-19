@@ -80,6 +80,7 @@ class Orange
   ontouchend : (ev)->
     return if not ev.touches?
     return if @updown == true
+    touch = ev.touches[0]
     down = @down;
     x = touch.pageX;
     @dx = x - down.x;

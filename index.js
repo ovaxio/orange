@@ -100,13 +100,14 @@
     };
 
     Orange.prototype.ontouchend = function(ev) {
-      var down, last_pos, w, x;
+      var down, last_pos, touch, w, x;
       if (ev.touches == null) {
         return;
       }
       if (this.updown === true) {
         return;
       }
+      touch = ev.touches[0];
       down = this.down;
       x = touch.pageX;
       this.dx = x - down.x;
