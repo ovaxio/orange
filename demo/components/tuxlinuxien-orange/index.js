@@ -63,10 +63,10 @@
       this.updown = null;
       this.touch_translated = 0;
       touch = ev.touches[0];
-      return this.down({
+      return this.down = {
         x: touch.pageX,
         y: touch.pageY
-      });
+      };
     };
 
     Orange.prototype.ontouchmove = function(ev) {

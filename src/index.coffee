@@ -32,17 +32,17 @@ class Orange
     #standard mouse click events
     @events.bind('mousedown', 'ontouchstart');
     @events.bind('mousemove', 'ontouchmove');
-    @docEvents.bind('mouseup', 'ontouchend');
+    @events.bind('mouseup', 'ontouchend');
 
     #W3C touch events
     @events.bind('touchstart');
     @events.bind('touchmove');
-    @docEvents.bind('touchend');
+    @events.bind('touchend');
 
     #MS IE touch events
     @events.bind('PointerDown', 'ontouchstart');
     @events.bind('PointerMove', 'ontouchmove');
-    @docEvents.bind('PointerUp', 'ontouchstart');
+    @events.bind('PointerUp', 'ontouchstart');
 
 
   ontouchstart : (ev)->
