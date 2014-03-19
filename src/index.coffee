@@ -82,8 +82,6 @@ class Orange
     return if @updown == true
     touch = ev.touches[0]
     down = @down;
-    x = touch.pageX;
-    @dx = x - down.x;
     w = @el.clientWidth
     last_pos = @current
     if (@dx / w * 100) < -10

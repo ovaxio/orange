@@ -100,7 +100,7 @@
     };
 
     Orange.prototype.ontouchend = function(ev) {
-      var down, last_pos, touch, w, x;
+      var down, last_pos, touch, w;
       if (ev.touches == null) {
         return;
       }
@@ -109,8 +109,6 @@
       }
       touch = ev.touches[0];
       down = this.down;
-      x = touch.pageX;
-      this.dx = x - down.x;
       w = this.el.clientWidth;
       last_pos = this.current;
       if ((this.dx / w * 100) < -10) {
