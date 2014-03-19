@@ -58,14 +58,14 @@
 
     Orange.prototype.ontouchstart = function(ev) {
       var touch;
-      if (ev.touches != null) {
+      if (ev.touches == null) {
         return;
       }
       this.setTransition(0);
       this.dx = 0;
       this.updown = null;
       this.touch_translated = 0;
-      console.log;
+      console.log("toto");
       touch = ev.touches[0];
       return this.down = {
         x: touch.pageX,
@@ -75,7 +75,7 @@
 
     Orange.prototype.ontouchmove = function(ev) {
       var d, down, dy, slope, touch, x, y;
-      if (ev.touches != null) {
+      if (ev.touches == null) {
         return;
       }
       if (!this.down || this.updown) {

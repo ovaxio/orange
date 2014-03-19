@@ -46,19 +46,19 @@ class Orange
 
 
   ontouchstart : (ev)->
-    return if ev.touches?
+    return if not ev.touches?
     @setTransition(0)
     @dx = 0;
     @updown = null;
     @touch_translated = 0
-    console.log 
+    console.log "toto"
     touch = ev.touches[0]
     @down = 
       x: touch.pageX
       y: touch.pageY
 
   ontouchmove : (ev)->
-    return if ev.touches?
+    return if not ev.touches?
     return if !this.down or this.updown
     touch = ev.touches[0]
 
