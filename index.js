@@ -112,10 +112,10 @@
       down = this.down;
       w = this.el.clientWidth;
       last_pos = this.current;
-      if ((this.dx / w * 100) < -10) {
+      if ((this.dx / w * 100) > -10) {
         this.prev();
       }
-      if ((this.dx / w * 100) > 10) {
+      if ((this.dx / w * 100) < 10) {
         this.next();
       }
       if (last_pos === this.current) {

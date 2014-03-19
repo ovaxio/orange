@@ -85,9 +85,9 @@ class Orange
     down = @down;
     w = @el.clientWidth
     last_pos = @current
-    if (@dx / w * 100) < -10
+    if (@dx / w * 100) > -10
       @prev()
-    if (@dx / w * 100) > 10
+    if (@dx / w * 100) < 10
       @next()
     if last_pos == @current
       @goTo(@current)
