@@ -96,11 +96,11 @@
         }
       }
       ev.preventDefault();
-      return this.setTransform(dx + "px");
+      return this.setTransform(this.dx + "px");
     };
 
     Orange.prototype.ontouchend = function(ev) {
-      var down, dx, last_pos, w, x;
+      var down, last_pos, w, x;
       if (ev.touches == null) {
         return;
       }
@@ -109,13 +109,13 @@
       }
       down = this.down;
       x = touch.pageX;
-      dx = x - down.x;
+      this.dx = x - down.x;
       w = parent.el.clientWidth;
       last_pos = this.current;
-      if ((dx / w * 100) < -10) {
+      if ((this.dx / w * 100) < -10) {
         this.prev();
       }
-      if ((dx / w * 100) > 10) {
+      if ((this.dx / w * 100) > 10) {
         this.next();
       }
       if (last_pos === this.current) {
