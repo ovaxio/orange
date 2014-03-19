@@ -30,7 +30,7 @@ class Orange
     @docEvents = events(document, @);
 
     #W3C touch events
-    @events.bind('touchstart', 'ontouchstart');
+    @events.bind('touchstart', @ontouchstart);
     @events.bind('touchmove');
     @events.bind('touchend');
 
