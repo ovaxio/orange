@@ -29,11 +29,6 @@ class Orange
     @events = events(@el, @);
     @docEvents = events(document, @);
 
-    #standard mouse click events
-    @events.bind('mousedown', 'ontouchstart');
-    @events.bind('mousemove', 'ontouchmove');
-    @events.bind('mouseup', 'ontouchend');
-
     #W3C touch events
     @events.bind('touchstart');
     @events.bind('touchmove');
@@ -46,7 +41,7 @@ class Orange
 
 
   ontouchstart : (ev)->
-    return if ev.touches[0]?
+    return if ev.touches?
     @setTransition(0)
     @dx = 0;
     @updown = null;
@@ -58,7 +53,7 @@ class Orange
       y: touch.pageY
 
   ontouchmove : (ev)->
-    return if ev.touches[0]?
+    return if ev.touches?
     return if !this.down or this.updown
     touch = ev.touches[0]
 

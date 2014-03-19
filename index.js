@@ -45,9 +45,6 @@
     Orange.prototype.bind = function() {
       this.events = events(this.el, this);
       this.docEvents = events(document, this);
-      this.events.bind('mousedown', 'ontouchstart');
-      this.events.bind('mousemove', 'ontouchmove');
-      this.events.bind('mouseup', 'ontouchend');
       this.events.bind('touchstart');
       this.events.bind('touchmove');
       this.events.bind('touchend');
@@ -58,7 +55,7 @@
 
     Orange.prototype.ontouchstart = function(ev) {
       var touch;
-      if (ev.touches[0] != null) {
+      if (ev.touches != null) {
         return;
       }
       this.setTransition(0);
@@ -75,7 +72,7 @@
 
     Orange.prototype.ontouchmove = function(ev) {
       var d, down, dy, slope, touch, x, y;
-      if (ev.touches[0] != null) {
+      if (ev.touches != null) {
         return;
       }
       if (!this.down || this.updown) {
