@@ -47,13 +47,13 @@
       this.docEvents = events(document, this);
       this.events.bind('mousedown', 'ontouchstart');
       this.events.bind('mousemove', 'ontouchmove');
-      this.docEvents.bind('mouseup', 'ontouchend');
+      this.events.bind('mouseup', 'ontouchend');
       this.events.bind('touchstart');
       this.events.bind('touchmove');
-      this.docEvents.bind('touchend');
+      this.events.bind('touchend');
       this.events.bind('PointerDown', 'ontouchstart');
       this.events.bind('PointerMove', 'ontouchmove');
-      return this.docEvents.bind('PointerUp', 'ontouchstart');
+      return this.events.bind('PointerUp', 'ontouchstart');
     };
 
     Orange.prototype.ontouchstart = function(ev) {
