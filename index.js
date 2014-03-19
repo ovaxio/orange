@@ -96,8 +96,7 @@
         }
       }
       ev.preventDefault();
-      d = down.x - x;
-      console.log(d);
+      d = (down.x - x) * -1;
       return this.setTransform(d + "px");
     };
 

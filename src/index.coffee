@@ -76,8 +76,7 @@ class Orange
       else
         @updown = false
     ev.preventDefault()
-    d = (down.x - x)
-    console.log d
+    d = (down.x - x) * -1
     @setTransform(d+"px")
     
   ontouchend : (ev)->
