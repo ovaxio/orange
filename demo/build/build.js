@@ -755,6 +755,7 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
       this.updown = null;
       this.touch_translated = 0;
       touch = ev.touches[0];
+      console.log(ev);
       return this.down = {
         x: touch.pageX,
         y: touch.pageY
