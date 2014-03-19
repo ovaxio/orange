@@ -45,6 +45,9 @@
     Orange.prototype.bind = function() {
       this.events = events(this.el, this);
       this.docEvents = events(document, this);
+      this.events.bind('touchstart', 'ontouchstart');
+      this.events.bind('touchmove');
+      this.events.bind('touchend');
       this.events.bind('PointerDown', 'ontouchstart');
       this.events.bind('PointerMove', 'ontouchmove');
       return this.events.bind('PointerUp', 'ontouchstart');
