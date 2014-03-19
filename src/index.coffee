@@ -82,7 +82,7 @@ class Orange
     return if @updown == true
     down = @down;
     x = touch.pageX;
-    @dx = x - down.x;
+    dx = x - down.x;
     w = parent.el.clientWidth
     last_pos = @current
     if (dx / w * 100) < -10
