@@ -48,7 +48,8 @@ class Orange
   ontouchstart : (ev)->
     return if not ev.touches?
     @setTransition(0)
-    @dx = 0;
+    @dx_init = @current * @el.clientWidth
+    @dx = 0
     @updown = null;
     @touch_translated = 0
     touch = ev.touches[0]
@@ -75,7 +76,7 @@ class Orange
       else
         @updown = false
     ev.preventDefault()
-    @setTransform(@dx+"px")
+    @setTransform((@dx + @dx_init)+"px")
     
   ontouchend : (ev)->
     return if not ev.touches?

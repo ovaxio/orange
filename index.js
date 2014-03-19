@@ -62,6 +62,7 @@
         return;
       }
       this.setTransition(0);
+      this.dx_init = this.current * this.el.clientWidth;
       this.dx = 0;
       this.updown = null;
       this.touch_translated = 0;
@@ -96,7 +97,7 @@
         }
       }
       ev.preventDefault();
-      return this.setTransform(this.dx + "px");
+      return this.setTransform((this.dx + this.dx_init) + "px");
     };
 
     Orange.prototype.ontouchend = function(ev) {
