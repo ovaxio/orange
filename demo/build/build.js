@@ -359,9 +359,6 @@ Emitter.prototype.hasListeners = function(event){
 
 });
 require.register("component-event/index.js", function(exports, require, module){
-var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
-    unbind = window.removeEventListener ? 'removeEventListener' : 'detachEvent',
-    prefix = bind !== 'addEventListener' ? 'on' : '';
 
 /**
  * Bind `el` event `type` to `fn`.
@@ -375,7 +372,11 @@ var bind = window.addEventListener ? 'addEventListener' : 'attachEvent',
  */
 
 exports.bind = function(el, type, fn, capture){
-  el[bind](prefix + type, fn, capture || false);
+  if (el.addEventListener) {
+    el.addEventListener(type, fn, capture);
+  } else {
+    el.attachEvent('on' + type, fn);
+  }
   return fn;
 };
 
@@ -391,9 +392,14 @@ exports.bind = function(el, type, fn, capture){
  */
 
 exports.unbind = function(el, type, fn, capture){
-  el[unbind](prefix + type, fn, capture || false);
+  if (el.removeEventListener) {
+    el.removeEventListener(type, fn, capture);
+  } else {
+    el.detachEvent('on' + type, fn);
+  }
   return fn;
 };
+
 });
 require.register("component-event-manager/index.js", function(exports, require, module){
 
@@ -632,13 +638,13 @@ var el = document.createElement('p');
 var style;
 
 for (var i = 0; i < styles.length; i++) {
-  style = styles[i];
-  if (null != el.style[style]) {
-    module.exports = style;
+  if (null != el.style[styles[i]]) {
+    style = styles[i];
     break;
   }
 }
 
+module.exports = style;
 });
 require.register("component-transitionend-property/index.js", function(exports, require, module){
 /**
@@ -755,7 +761,7 @@ require.register("tuxlinuxien-orange/index.js", function(exports, require, modul
       this.updown = null;
       this.touch_translated = 0;
       touch = ev.touches[0];
-      console.log(ev);
+      console.log(ev.touches);
       return this.down = {
         x: touch.pageX,
         y: touch.pageY
