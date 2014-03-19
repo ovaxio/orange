@@ -51,7 +51,6 @@ class Orange
     @dx = 0;
     @updown = null;
     @touch_translated = 0
-    console.log "toto"
     touch = ev.touches[0]
     @down = 
       x: touch.pageX
@@ -79,6 +78,7 @@ class Orange
     ev.preventDefault()
     d = (down.x - x)
     console.log d
+    @setTransform(d+"px")
     
   ontouchend : (ev)->
 

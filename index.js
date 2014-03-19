@@ -65,7 +65,6 @@
       this.dx = 0;
       this.updown = null;
       this.touch_translated = 0;
-      console.log("toto");
       touch = ev.touches[0];
       return this.down = {
         x: touch.pageX,
@@ -98,7 +97,8 @@
       }
       ev.preventDefault();
       d = down.x - x;
-      return console.log(d);
+      console.log(d);
+      return this.setTransform(d + "px");
     };
 
     Orange.prototype.ontouchend = function(ev) {};
