@@ -84,7 +84,7 @@ class Orange
     down = @down;
     x = touch.pageX;
     @dx = x - down.x;
-    w = parent.el.clientWidth
+    w = @el.clientWidth
     last_pos = @current
     if (@dx / w * 100) < -10
       @prev()

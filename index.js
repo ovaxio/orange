@@ -111,7 +111,7 @@
       down = this.down;
       x = touch.pageX;
       this.dx = x - down.x;
-      w = parent.el.clientWidth;
+      w = this.el.clientWidth;
       last_pos = this.current;
       if ((this.dx / w * 100) < -10) {
         this.prev();
