@@ -1,9 +1,3 @@
-transitionend = require('transitionend-property')
-transform = require('transform-property')
-touchAction = require('touchaction-property')
-has3d = require('has-translate3d')
-style = require('computed-style')
-Emitter = require('emitter')
 event = require('event')
 events = require('events')
 
@@ -91,7 +85,6 @@ class Orange
       @next()
     if last_pos == @current
       @goTo(@current)
-
 
     
   hasTransform : ()->
