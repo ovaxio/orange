@@ -64,7 +64,6 @@ class Orange
     down = @down;
     x = touch.pageX;
     @dx = x - down.x;
-
     if null == @updown
       y = touch.pageY;
       dy = y - down.y;
@@ -76,10 +75,22 @@ class Orange
       else
         @updown = false
     ev.preventDefault()
-    d = (down.x - x) * -1
-    @setTransform(d+"px")
+    @setTransform(dx+"px")
     
   ontouchend : (ev)->
+    return if not ev.touches?
+    return if @updown == true
+    down = @down;
+    x = touch.pageX;
+    @dx = x - down.x;
+    w = parent.el.clientWidth
+    last_pos = @current
+    if (dx / w * 100) < -10
+      @prev()
+    if (dx / w * 100) > 10
+      @next()
+    if last_pos == @current
+      parent.goTo(@current)
 
   initTouchEvents : ()->
     parent = @

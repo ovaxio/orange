@@ -73,7 +73,7 @@
     };
 
     Orange.prototype.ontouchmove = function(ev) {
-      var d, down, dy, slope, touch, x, y;
+      var down, dy, slope, touch, x, y;
       if (ev.touches == null) {
         return;
       }
@@ -96,11 +96,32 @@
         }
       }
       ev.preventDefault();
-      d = (down.x - x) * -1;
-      return this.setTransform(d + "px");
+      return this.setTransform(dx + "px");
     };
 
-    Orange.prototype.ontouchend = function(ev) {};
+    Orange.prototype.ontouchend = function(ev) {
+      var down, last_pos, w, x;
+      if (ev.touches == null) {
+        return;
+      }
+      if (this.updown === true) {
+        return;
+      }
+      down = this.down;
+      x = touch.pageX;
+      this.dx = x - down.x;
+      w = parent.el.clientWidth;
+      last_pos = this.current;
+      if ((dx / w * 100) < -10) {
+        this.prev();
+      }
+      if ((dx / w * 100) > 10) {
+        this.next();
+      }
+      if (last_pos === this.current) {
+        return parent.goTo(this.current);
+      }
+    };
 
     Orange.prototype.initTouchEvents = function() {
       var parent;
