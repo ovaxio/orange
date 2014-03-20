@@ -12,6 +12,9 @@
       this.el = el;
       this.current = 0;
       this.timer = null;
+      this.transition_animation = "ease-in-out";
+      this.transition_timer = 1;
+      this.swipe_loop = false;
       this.container = this.el.querySelector('.orange-skin');
       this.slices = this.el.querySelectorAll('.slice');
       this.count = this.slices.length;
@@ -25,6 +28,18 @@
       this.container.style.left = "0%";
       this.bind();
     }
+
+    Orange.prototype.setTransitionAnimation = function(_t) {
+      return this.transition_animation = _t;
+    };
+
+    Orange.prototype.setTransitionTimer = function(_s) {
+      return this.transition_timer = _s;
+    };
+
+    Orange.prototype.setSwipeLoop = function(_b) {
+      return this.swipe_loop = _b;
+    };
 
     Orange.prototype.getSlide = function(id) {
       return this.slices[this.current];
@@ -101,10 +116,18 @@
       w = this.el.clientWidth;
       last_pos = this.current;
       if ((this.dx / w * 100) > -10) {
-        this.prev();
+        if (this.swipe_loop) {
+          this.prevLoop();
+        } else {
+          this.prev();
+        }
       }
       if ((this.dx / w * 100) < 10) {
-        this.next();
+        if (this.swipe_loop) {
+          this.nextLoop();
+        } else {
+          this.next();
+        }
       }
       if (last_pos === this.current) {
         return this.goTo(this.current);
@@ -148,7 +171,7 @@
         this.container.style.MsTransition = "";
         return;
       }
-      type = "ease-in-out";
+      type = this.transition_animation;
       this.container.style.transition = "transform " + type + " " + time + "s";
       this.container.style.MozTransition = "-moz-transform " + type + " " + time + "s";
       this.container.style.WebkitTransition = "-webkit-transform " + type + " " + time + "s";
@@ -167,7 +190,7 @@
         pos = id * -100;
         return this.container.style.left = pos + "%";
       } else {
-        this.setTransition(1);
+        this.setTransition(this.transition_timer);
         pos = 100 / this.count * this.current * -1;
         return this.setTransform(pos + "%");
       }

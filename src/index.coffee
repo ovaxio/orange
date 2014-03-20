@@ -6,6 +6,9 @@ class Orange
     @el = el
     @current = 0
     @timer = null
+    @transition_animation = "ease-in-out"
+    @transition_timer = 1
+    @swipe_loop = false
     @container = @el.querySelector('.orange-skin')
     @slices = @el.querySelectorAll('.slice')
     @count = @slices.length
@@ -15,6 +18,15 @@ class Orange
     @setTransform("0%")
     @container.style.left = "0%"
     @bind()
+
+  setTransitionAnimation : (_t)->
+    @transition_animation = _t
+
+  setTransitionTimer : (_s)->
+    @transition_timer = _s
+
+  setSwipeLoop : (_b)->
+    @swipe_loop = _b
 
   getSlide : (id)->
     return @slices[@current]
@@ -80,9 +92,15 @@ class Orange
     w = @el.clientWidth
     last_pos = @current
     if (@dx / w * 100) > -10
-      @prev()
+      if @swipe_loop
+        @prevLoop()
+      else
+        @prev()
     if (@dx / w * 100) < 10
-      @next()
+      if @swipe_loop
+        @nextLoop()
+      else
+        @next()
     if last_pos == @current
       @goTo(@current)
 
@@ -115,7 +133,7 @@ class Orange
       @container.style.OTransition = ""
       @container.style.MsTransition = ""
       return 
-    type = "ease-in-out"
+    type = @transition_animation
     @container.style.transition = "transform #{type} #{time}s"
     @container.style.MozTransition = "-moz-transform #{type} #{time}s"
     @container.style.WebkitTransition = "-webkit-transform #{type} #{time}s"
@@ -131,7 +149,7 @@ class Orange
       pos = id * -100
       @container.style.left = pos + "%"
     else
-      @setTransition(1)
+      @setTransition(@transition_timer)
       pos = 100 / @count * @current * -1
       @setTransform(pos+"%")
 

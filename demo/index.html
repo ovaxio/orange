@@ -20,14 +20,25 @@ body {
   margin: 4px 4px 4px 0;
   line-height: 1;
 }
+
+.orange .orange-skin .slice {
+  height : 200px;
+}
+
+.orange .orange-skin .slice .s1 {
+  background-color: #333;
+}
+.orange .orange-skin .slice .s2 {
+  background-color: #ddd;
+}
 </style>
   </head>
   <body>
     <div class="orange"><a href="#" class="nav-prev">&lsaquo;</a><a href="#" class="nav-next">&rsaquo;</a>
       <ol class="orange-skin">
-        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=1"></li>
-        <li class="slice"><img src="http://dummyimage.com/600x200/aaa/999.jpg&amp;text=2"></li>
-        <li class="slice"><img src="http://dummyimage.com/600x200/dedede/ccc.jpg&amp;text=3"></li>
+        <li class="slice s1" style="background-color: #ccc;"></li>
+        <li class="slice s2" style="background-color: #666;"></li>
+        <li class="slice s1" style="background-color: #333;"></li>
       </ol>
     </div>
     <script src="build/build.js"></script><script type="text/javascript">
@@ -43,6 +54,8 @@ body {
   slideshow_container = document.querySelector('.orange');
 
   slideshow = new Slideshow(slideshow_container);
+  slideshow.setSwipeLoop(true)
+  slideshow.setTransitionAnimation("ease")
 
   slideshow_container.querySelector('.nav-next').onclick = function() {
     slideshow.next();
