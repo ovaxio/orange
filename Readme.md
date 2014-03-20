@@ -26,8 +26,14 @@
   - `start(<timeout>)`: start auto slide every <timeout> (millisecond)
   - `stop()`: stop auto slide
   - `goTo(<slide_id>)`: go to the slide <slide_id> (Integer)
-  - `setTouchable(<b>)`: set touchable behavior. True by default (boolean)
-  - `isTouchable()`: give the current behavior of the Orange instance (return true/false)
+  - `setTransitionAnimation(<type>)`: type of transition (default "ease-in-out" / String)
+  - `setTransitionTimer(<seconds>)`: transition timer (default 1s / Float) 
+  - `setSwipeLoop(<boolean>)`: set if the slider loop on swipe transition (default false / Boolean)
+  - `onNext()`: callback when slider goes to next slide
+  - `onPrev()`: callback when slider goes to prev slide
+  - `onGoTo()`: callback when goTo is called
+  - `onChangeSlide()`: callback when slide is changed
+  
 
 ## Usage
 

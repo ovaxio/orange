@@ -17,6 +17,10 @@ class Orange
       s.style.width = (100 / @count) + "%"
     @setTransform("0%")
     @container.style.left = "0%"
+    @onNext = ()->
+    @onPrev = ()->
+    @onChangeSlide = ()->
+    @onGoTo = ()->
     @bind()
 
   setTransitionAnimation : (_t)->
@@ -140,10 +144,11 @@ class Orange
     @container.style.OTransition = "-o-transform #{type} #{time}s"
     @container.style.MsTransition = "-ms-transform #{type} #{time}s"
 
-  goTo : (id)->
+  _changeSlide : (id)->
     if id < 0 || id >= @count
       return
     @current = id
+    @onChangeSlide()
     transformProp = @hasTransform()
     if transformProp == null
       pos = id * -100
@@ -153,18 +158,24 @@ class Orange
       pos = 100 / @count * @current * -1
       @setTransform(pos+"%")
 
+  goTo : (id)->
+    @_changeSlide(id)
+    @onGoTo()
+
   next : ()->
     @stop()
     return if @current + 1 >= @count
     @current++
-    @goTo(@current)
+    @_changeSlide(@current)
+    @onNext()
     return
 
   prev : ()->
     @stop()
     return if @current - 1 < 0
     @current--
-    @goTo(@current)
+    @_changeSlide(@current)
+    @onPrev()
     return
 
   prevLoop : ()->
@@ -172,14 +183,16 @@ class Orange
     @current--
     if @current < 0
       @current = @count - 1
-    @goTo(@current)
+    @_changeSlide(@current)
+    @onPrev()
     return
 
   nextLoop : ()->
     @stop()
     @current++
     @current = @current % @count
-    @goTo(@current)
+    @_changeSlide(@current)
+    @onNext()
     return
 
   start : (t)->

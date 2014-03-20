@@ -26,6 +26,10 @@
       }
       this.setTransform("0%");
       this.container.style.left = "0%";
+      this.onNext = function() {};
+      this.onPrev = function() {};
+      this.onChangeSlide = function() {};
+      this.onGoTo = function() {};
       this.bind();
     }
 
@@ -179,12 +183,13 @@
       return this.container.style.MsTransition = "-ms-transform " + type + " " + time + "s";
     };
 
-    Orange.prototype.goTo = function(id) {
+    Orange.prototype._changeSlide = function(id) {
       var pos, transformProp;
       if (id < 0 || id >= this.count) {
         return;
       }
       this.current = id;
+      this.onChangeSlide();
       transformProp = this.hasTransform();
       if (transformProp === null) {
         pos = id * -100;
@@ -196,13 +201,19 @@
       }
     };
 
+    Orange.prototype.goTo = function(id) {
+      this._changeSlide(id);
+      return this.onGoTo();
+    };
+
     Orange.prototype.next = function() {
       this.stop();
       if (this.current + 1 >= this.count) {
         return;
       }
       this.current++;
-      this.goTo(this.current);
+      this._changeSlide(this.current);
+      this.onNext();
     };
 
     Orange.prototype.prev = function() {
@@ -211,7 +222,8 @@
         return;
       }
       this.current--;
-      this.goTo(this.current);
+      this._changeSlide(this.current);
+      this.onPrev();
     };
 
     Orange.prototype.prevLoop = function() {
@@ -220,14 +232,16 @@
       if (this.current < 0) {
         this.current = this.count - 1;
       }
-      this.goTo(this.current);
+      this._changeSlide(this.current);
+      this.onPrev();
     };
 
     Orange.prototype.nextLoop = function() {
       this.stop();
       this.current++;
       this.current = this.current % this.count;
-      this.goTo(this.current);
+      this._changeSlide(this.current);
+      this.onNext();
     };
 
     Orange.prototype.start = function(t) {

@@ -1,8 +1,8 @@
 {
   "name": "orange",
   "repo": "tuxlinuxien/orange",
-  "description": "slideshow",
-  "version": "0.1.2",
+  "description": "slideshow with swipe detectction",
+  "version": "0.1.3",
   "keywords": [],
   "dependencies": {
     "component/event": "*",

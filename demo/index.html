@@ -56,6 +56,19 @@ body {
   slideshow = new Slideshow(slideshow_container);
   slideshow.setSwipeLoop(true)
   slideshow.setTransitionAnimation("ease")
+  slideshow.onNext = function() {
+    console.log("next");
+    console.log(this.current);
+  }
+  slideshow.onPrev = function() {
+    console.log("prev");
+    console.log(this.current);
+  }
+
+  slideshow.onChangeSlide = function() {
+    console.log("changed");
+    console.log(this.current);
+  }
 
   slideshow_container.querySelector('.nav-next').onclick = function() {
     slideshow.next();
